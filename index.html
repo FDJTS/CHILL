@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chill</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="glitch-overlay"></div>
+
+    <div id="start-screen" class="screen active">
+        <div class="glitch-container">
+            <button id="start-btn">Click to Start</button>
+        </div>
+    </div>
+
+    <div id="surprise-screen" class="screen">
+        <div class="image-stack">
+            <img id="finger-img"
+                src="free-png-middle-finger-png-images-transparent-middle-finger-11562850816taa5blb5jl.png"
+                alt="Overlay">
+            <img id="doakes-gif" src="sergeant-doakes-james-doakes.gif" alt="Surprise">
+        </div>
+        <h1 class="glitch" data-text="Surprise, motherfucker.">Surprise, motherfucker.</h1>
+        <h2 id="trapped-text" class="hidden">You got trapped.</h2>
+    </div>
+
+    <div id="scan-screen" class="screen">
+        <div class="scanner">
+            <div class="scan-line"></div>
+            <p class="blink">UNAUTHORIZED ACCESS DETECTED...</p>
+            <p>LOCKING SYSTEM FILES...</p>
+            <p>UPLOADING BIOMETRICS...</p>
+            <div id="scan-progress">0%</div>
+        </div>
+    </div>
+
+    <div id="info-screen" class="screen">
+        <div class="terminal">
+            <div class="terminal-header">SYSTEM_REPORT_V1.0.4</div>
+            <div class="terminal-body">
+                <div class="mugshot-container">
+                    <img id="user-photo" class="hidden" alt="IDENTIFIED_USER">
+                    <div id="photo-label" class="hidden">MUGSHOT_ID_8820.jpg</div>
+                </div>
+                <div class="info-grid">
+                    <p>>_ IP_ADDRESS: <span id="ip-address">detecting...</span></p>
+                    <p>>_ LOCATION: <span id="location-name">detecting...</span></p>
+                    <p>>_ BROWSER: <span id="browser-name">detecting...</span></p>
+                    <p>>_ OS: <span id="os-name">detecting...</span></p>
+                    <p>>_ RESOLUTION: <span id="screen-res">detecting...</span></p>
+                    <p>>_ LANGUAGE: <span id="language">detecting...</span></p>
+                    <p>>_ SQL_STATUS: <span id="db-status">DISCONNECTED</span></p>
+                </div>
+            </div>
+            <div id="final-message" class="hidden">
+                <p class="warning">Relax. This was just a prank. But your browser shares more than you think.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden elements for camera capture -->
+    <video id="webcam" autoplay playsinline class="hidden"></video>
+    <canvas id="canvas" class="hidden"></canvas>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,403 @@
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --accent-color: #00ff00;
+    --error-color: #ff0000;
+    --font-main: 'Fira Code', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none !important;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px);
+    pointer-events: none;
+    z-index: 100;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Start Button */
+#start-btn {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+#start-btn:hover {
+    background: var(--text-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Surprise Screen */
+#doakes-gif {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 20px;
+    border: 2px solid #333;
+}
+
+#surprise-screen h1 {
+    font-size: 3rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+#trapped-text {
+    font-size: 2rem;
+    color: var(--error-color);
+    text-transform: uppercase;
+}
+
+/* Scanner Animation */
+.scanner {
+    width: 300px;
+    height: 200px;
+    border: 1px solid var(--accent-color);
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
+    animation: scan 1.5s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+/* Terminal Aesthetic */
+.terminal {
+    width: 90%;
+    max-width: 600px;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-header {
+    background: #1a1a1a;
+    padding: 10px;
+    color: #666;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Full Screen Glitch Overlay */
+#glitch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.glitch-active #glitch-overlay {
+    animation: screen-glitch 0.2s infinite;
+    background: rgba(0, 255, 0, 0.05);
+}
+
+@keyframes screen-glitch {
+    0% {
+        transform: translate(0) skew(0deg);
+        filter: hue-rotate(0deg);
+        opacity: 1;
+    }
+
+    2% {
+        transform: translate(-20px, 10px) skew(10deg);
+        filter: invert(1);
+        background: #f00;
+    }
+
+    4% {
+        transform: translate(20px, -10px) skew(-10deg);
+        filter: contrast(1000%);
+        background: #00f;
+    }
+
+    6% {
+        transform: translate(-5px, 20px) scale(1.5);
+        opacity: 0.1;
+    }
+
+    8% {
+        transform: translate(5px, -20px) skewX(40deg);
+        opacity: 0.9;
+        background: #fff;
+    }
+
+    10% {
+        transform: translate(0);
+        filter: none;
+        opacity: 1;
+    }
+
+    15% {
+        transform: scaleY(5) skewX(-40deg);
+        filter: brightness(10);
+    }
+
+    20% {
+        transform: scaleY(1);
+    }
+
+    30% {
+        transform: translate(-40px, 0) scale(0.5);
+        filter: blur(10px);
+    }
+
+    50% {
+        transform: translate(40px, 0);
+        background: rgba(0, 255, 0, 0.5);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.glitch-active {
+    animation: body-shake 0.1s infinite;
+}
+
+@keyframes body-shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+/* Image Stack for Surprise */
+.image-stack {
+    position: relative;
+    width: 320px;
+    height: 240px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#finger-img {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    opacity: 0.8;
+}
+
+#doakes-gif {
+    position: absolute;
+    width: 80%;
+    height: auto;
+    z-index: 2;
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+/* Main Terminal Container */
+.terminal {
+    background: #000;
+    border: 1px solid #333;
+    padding: 15px;
+    width: 600px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.05);
+    position: relative;
+    z-index: 10;
+}
+
+.mugshot-container {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #00ff00;
+    margin-bottom: 15px;
+    background: #050505;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#user-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.5) brightness(0.8);
+    opacity: 0;
+    /* Hidden initially */
+    transition: opacity 0.5s ease;
+}
+
+#user-photo.show {
+    opacity: 1 !important;
+    /* Use !important to override initial opacity */
+    filter: grayscale(1) contrast(2);
+}
+
+#photo-label {
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+    color: #00ff00;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.info-grid {
+    clear: left;
+}
+
+#webcam {
+    position: fixed;
+    top: -1000px;
+    /* Forcefully out of view */
+    left: -1000px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Terminal & Mugshot */
+.terminal-body {
+    padding: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.info-grid p {
+    margin-bottom: 8px;
+}
+
+.blink {
+    animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.warning {
+    color: var(--error-color);
+    font-weight: bold;
+    text-transform: uppercase;
+}
